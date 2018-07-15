@@ -70,7 +70,47 @@
 	
 	\textbf{Problem 1.4:} Show that $log(n!) = \Theta(nlog(n))$.
 	
-	Using hint, $n! < n^n$ \& $n! > (n/2)^{n/2}$. Hence, $log(n!) < nlog(n)$ \& $log(n!) < (n/2)log(n/2)$. The lower bound can also be expressed as $log(n!) < (1/2)(nlog(n) - n)$. Hence, $log(n!) = \Theta(nlog(n))$.
+	Using hint, $n! < n^n$ \& $n! > (n/2)^{n/2}$. Hence, $log(n!) < nlog(n)$ \& $log(n!) < (n/2)log(n/2)$. The lower bound can also be expressed as $log(n!) < (1/2)(nlog(n) - n)$. Hence, $log(n!) = \Theta(nlog(n))$.\\
 	
+	\textbf{Problem 1.5:} Refer question in book.
+	
+	Based on the hint, we see that the harmonic series is $O(log_2(n))$ \& $\Omega(log_4(n))$. Thus, the given  harmonic series is $\Theta(log(n))$.\\
+	
+	\textbf{Problem 1.6:}Prove that the grade-school multiplication algorithm (Refer book for page \#), when applied to binary numbers, always gives the right answer.
+	
+	It works for binary numbers too. Grad-school multiplication algorithm for ($x\times y$), multiply $x$ with every bits of $y$ and each level shift multiplications results to left by one decimal places (which is similar to shifting one bit left) followed by addition.\\
+	
+	\textbf{Problem 1.7:}How long does the recursive multiplication algorithm (Refer book for page \#) take to multiply	an n-bit number by an m-bit number? Justify your answer.
+	
+	At each level, the m-bit number get reduced by one bit (being half) and you either multiply by 2 or add n-bit number with m-k bit number where k is the level. that's $O(max(m,n))$ at each step. So $O(mn)$.\\
+	
+	\textbf{Problem 1.8:}Justify the correctness of the recursive division algorithm given in page (Refer book for page \#), and show that it takes time $O(n^2)$ on n-bit inputs.	
+	
+	There are n recursive calls because of n halving that need to take place. Then, before each recursive call ends, there are arithmetic operations that are $O(n)$.
+	Thus, the time complexity is $O(n^2)$. This algorithm is correct because what it is essentially doing is dividing 1 by the divisor, then doubling both the quotient and remainder, and then checking to see if the remainder has overflowed. It continues upwards until the original value is reached, at which point the quotient	and remainder will be correct.\\
+	
+	\textbf{Problem 1.9:}Refer question in book.
+	
+	Since,
+	\begin{align*}
+	x - x' &= Np\\
+	y - y' &= Nq\\
+	\Rightarrow (x+y) - (x' + y') &= (x - x') + (y - y')\\
+	(x+y) - (x' + y') &= N(p+q)\\
+	\Rightarrow (x - x')\times(y - y') &= N^2pq\\
+	xy - xy' - x'y + x'y' &= N^2pq\\
+	xy - x'y' - xy' - x'y + 2x'y' &= N6pq\\
+	xy - x'y' -(x - x')y' - x'(y - y') &= N^2pq\\
+	xy - x'y' &= N^2pq + Npy' + Nqx'\\
+	xy - x'y' &= N(Npq + py'+ qx')
+	\end{align*}
+	
+	\textbf{Problem 1.10:}Show that if $a \equiv b (mod N)$ and if M divides N then $a \equiv b (mod M)$.
+	
+	Since, $a - b = kN$ \& $N = pM$, then $a - b = kpM$ \& hence, $a \equiv b (mod M)$.\\
+	
+	\textbf{Problem 1.11:} Is $4^{1536} - 9^{4824}$ divisible by 35?
+	
+	Since, $4^6 = 1 (mod 35) \Rightarrow 4^6 - 1 = 35p$ \& $9^6 = 1 (mod 35) \Rightarrow 9^6 - 1 = 35q$. Thus, $4^6 - 9^6 = 35(p-q) \Rightarrow 4^6 - 9^6 = 0(mod 35)$ \& $4^{1536} - 9^{4824} = (4^6)^{256} - (9^6)^{804} = 0(mod 35)$.
 	
 \end{document}
