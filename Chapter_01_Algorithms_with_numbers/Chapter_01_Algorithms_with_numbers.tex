@@ -109,8 +109,32 @@
 	
 	Since, $a - b = kN$ \& $N = pM$, then $a - b = kpM$ \& hence, $a \equiv b (mod M)$.\\
 	
-	\textbf{Problem 1.11:} Is $4^{1536} - 9^{4824}$ divisible by 35?
+	\textbf{Problem 1.11:}Is $4^{1536} - 9^{4824}$ divisible by 35?
 	
-	Since, $4^6 = 1 (mod 35) \Rightarrow 4^6 - 1 = 35p$ \& $9^6 = 1 (mod 35) \Rightarrow 9^6 - 1 = 35q$. Thus, $4^6 - 9^6 = 35(p-q) \Rightarrow 4^6 - 9^6 = 0(mod 35)$ \& $4^{1536} - 9^{4824} = (4^6)^{256} - (9^6)^{804} = 0(mod 35)$.
+	Since, $4^6 = 1 (mod 35) \Rightarrow 4^6 - 1 = 35p$ \& $9^6 = 1 (mod 35) \Rightarrow 9^6 - 1 = 35q$. Thus, $4^6 - 9^6 = 35(p-q) \Rightarrow 4^6 - 9^6 = 0(mod 35)$ \& $4^{1536} - 9^{4824} = (4^6)^{256} - (9^6)^{804} = 0(mod 35)$.\\
+	
+	\textbf{Problem 1.12:}What is $2^{2^{2006}}(mod 3)$?
+	
+	$2 = -1 (mod 3) \Rightarrow (-1)^{2^{2006}} = 1 (mod 3)$. Hence, answer is 1.\\
+	
+	\textbf{Problem 1.13:}Is the difference of $5^{30,000}$ and $6^{123,456}$ a multiple of 31?
+	
+	Since, $5^4 = 5 (mod 31) \Rightarrow 5^4 - 5 = 31p$ \& $6^2 = 5 (mod 31) \Rightarrow 6^2 - 5 = 31q$. Thus, $5^4 - 6^2 = 31(p-q) \Rightarrow 5^4 - 6^2 = 0(mod 31)$ \& $5^{30,000} - 6^{123,456} = (5^4)^{7500} - (6^2)^{61728} = 0(mod 35)$.\\
+		
+	\textbf{Problem 1.14:}Suppose you want to compute the nth Fibonacci number $F_n$ , modulo an integer p. Can you find an efficient way to do this?
+	
+	There are $log(n)$ multiplication step and each multiplication is at most $T(log(p))$ long. Hence, $O(log(n)Tlog(p))$.\\
+	
+	\textbf{Problem 1.15:}Determine necessary and sufficient conditions on $x$ and $c$ so that the following holds: for any $a$, $b$, if $ax \equiv bx$ mod $c$, then $a \equiv b$ mod $c$.
+	
+	$ax \equiv bx$ mod $c \Rightarrow c$ must divide $(a-b)x$ and $a \equiv b$ mod $c \Rightarrow c$ must divide $(a-b)$. Hence, necessary and sufficient conditions on  $x$ and $c$ is $gcd(c,x) = 1$.\\
+	
+	\textbf{Problem 1.16:}The algorithm for computing $a^b$ mod $c$ by repeated squaring does not necessarily
+	lead to the minimum number of multiplications. Give an example of $b > 10$	where the exponentiation can be performed using fewer multiplications, by some other method.
+	
+	Refer solution to problems 1.11, 1.12 \& 1.13.\\
+	
+	
+
 	
 \end{document}
