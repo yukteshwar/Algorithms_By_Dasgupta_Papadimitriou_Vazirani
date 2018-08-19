@@ -123,7 +123,44 @@
 		
 	\textbf{Problem 1.14:}Suppose you want to compute the nth Fibonacci number $F_n$ , modulo an integer p. Can you find an efficient way to do this?
 	
-	There are $log(n)$ multiplication step and each multiplication is at most $T(log(p))$ long. Hence, $O(log(n)Tlog(p))$.\\
+	Using following equation:
+	$$\begin{pmatrix}
+	F_n\\F_{n+1}
+	\end{pmatrix} =
+	\begin{pmatrix}
+	0 & 1\\1 & 1
+	\end{pmatrix}^n \times 
+	\begin{pmatrix}
+	F_0\\F_1
+	\end{pmatrix}$$
+	
+	Since $F_n(mod (p))$ can be obtained by taking the first term of the matrix $\begin{pmatrix}F_n\\F_{n+1}
+	\end{pmatrix}(mod (p))$.  As the matrix $\begin{pmatrix}F_0\\F_1\end{pmatrix}$ is a constatnt matrix, computing $\begin{pmatrix}0 & 1\\1 & 1 \end{pmatrix}^n (mod(p))$ is sufficient to compute $F_n(mod(p))$. Let matrix $\begin{pmatrix}0 & 1\\1 & 1 \end{pmatrix}$ be $X$. The modular exponentiation algorithm can be extended to solve this problem once following theorem can be proved:
+	
+	\textbf{Theorem:} Given a 2-D matrix $X$, $(X\ mod\ p)\times (X\ mod\ p) = X^2\ mod\ p$
+	
+	\textbf{Proof:} Let $X = \begin{pmatrix}a & b\\c & d\end{pmatrix}$, then
+	$$ X\ mod\ p = \begin{pmatrix}a + k_1p & b + k_2p\\c + k_3p & d + k_4p\end{pmatrix}$$
+	
+	Multiplying $(X\ mod\ p)\times (X\ mod\ p)$, the first term in the final matrix can be written as $b^2 + ac + pC$ where $C$ is any constant which is equivalent to the first term of the matrix $X^2\ mod\ p$. Same for other terms. Hence, $(X^n\ mod\ p)\times (X\ mod\ p) = X^{n+1}\ mod\ p$ can be established as well. The extended modular exponentiation algorithm is given by:\\
+	
+	function Modified-modexp(X, p, n)
+	
+	Input: $2\times2$ array X where each element is of n-bits, p (n bit) and integer exponent n
+	
+	Output: $(X^n\ mod\ p)$
+	
+	if n = 0: return $I_2$
+	
+	z = Modified-modexp(X, p, $\lfloor \frac{n}{2} \rfloor$)
+	
+	temp = $(z\ mod\ p)\times (z\ mod\ p)$
+	
+	if y is even: return temp
+	
+	else: return $(X\ mod\ p)\times temp$\\
+	
+	\textbf{Complexity Analysis:} Number of recursive calls are analogous to Modular Exponentiation presented at page 19. Matrix multiplication is $O(n^2)$ (Chapter 3 presents a better bound). Hence the complexity of the algorithm is $O(n^3)$.\\
 	
 	\textbf{Problem 1.15:}Determine necessary and sufficient conditions on $x$ and $c$ so that the following holds: for any $a$, $b$, if $ax \equiv bx$ mod $c$, then $a \equiv b$ mod $c$.
 	
@@ -133,6 +170,81 @@
 	lead to the minimum number of multiplications. Give an example of $b > 10$	where the exponentiation can be performed using fewer multiplications, by some other method.
 	
 	Refer solution to problems 1.11, 1.12 \& 1.13.\\
+	
+	\textbf{Problem 1.17}Consider the problem of computing $x^y$ for given integers x and y: we want the whole answer, not modulo a third integer. We know two algorithms for doing this: the iterative algorithm which performs y - 1 multiplications by x; and the
+	recursive algorithm based on the binary expansion of y.
+	
+	Compare the time requirements of these two algorithms, assuming that the time to multiply an n-bit number by an m-bit number is $O(mn)$.\\
+	
+	x and y are each n-bit long. We are performing complexity analysis of 2 algorithms for $^y$ computation.\\
+	
+	function  Iterative-Exponentiation(x,y)
+	
+	Input:  x and y each n-bit long
+	
+	Output: $x^y$
+	
+	prod = x
+	
+	for i = 1 to y - 1
+	
+	\hspace{0.25in} prod = x $\times$ prod
+	
+	return prod\\
+	
+	\textbf{Complexity Analysis:} After each multiplication, the size of product becomes $i\times n$ where $i$ is the current iteration. Total time is given by $\sum_{i = 0}^{y-1}O(in\cdot n) = \frac{(y-1)y}{2}O(n^2)$. The complexity is $O(y^2n^2)$ where $y$ is $O(2^n)$.\\
+	
+	function  Recursive-Exponentiation(x,y)
+	
+	Input:  x and y each n-bit long
+	
+	Output: $x^y$
+	
+	if y == 0: return 1
+	
+	z = Recursive-Exponentiation(x, $\lfloor \frac{y}{2} \rfloor$)
+	
+	if y is even: return z$\times$z
+	
+	else: return x$\times$z$\times$z\\
+	
+	\textbf{Complexity Analysis:} Since y is n-bit long, the number of iterations is bounded	by $O(n)$. Size of z on each return from recursive call increases by a factor of 4.Total running time is given by
+	$$O(n^2) + O(4n^2)+ \dots + O((2^{n-2}n)^2) = O(n^22^{2n})$$
+	
+	\textbf{Problem 1.31:}Consider the problem of computing $N! = 1\cdot2\cdot3\cdots N$.
+	\begin{enumerate}[label=(\alph*)]
+		\item If $N$ is an n-bit number, how many bits long is $N!$, approximately (in $\Theta(\cdot)$ form)?
+		
+		Upper Bound: Assuming each number 1,2,3,...,N is represented by n bits, the result of multiplying N n-bit number will give a number of $N\times n$ bits where $N=2^n$. Hence it in $O(N\times n)$.
+		
+		Lower Bound: Since each number $i \in (1,2,3, ..., N)$ can be optimally represented by log $i$ bits, total number of bits in N! is given by $\sum_{i=1}^N log(i)$ which is $log(N!)$. Using Sterling's approximation or using factor argument, $N! \geq (N/2)^{N/2}$ which implies that total number of bits in N! is lower bound by $Nlog(N)$. It turns out to be $\Omega(N\times n)$.
+		
+		Combining bpth, we get $\Theta(N\times n)$.
+		
+		\item Give an algorithm to compute N! and analyze its running time.
+		
+		A simple iterative algorithm to solve the problem is given by:
+		
+		Input : N
+		
+		Output : N!
+		
+		prod = 1
+		
+		for i = 1 to N
+		
+		\hspace{0.25in} prod = prod $\times$ i
+		
+		return prod
+		
+		Complexity analysis:We present a worst case bound. Assuming each of the number 1,2,3,...,N are n-bit long each multiplication computes product of a
+		$i \times n$ bit number with n bit number. Therefore total time taken by the for-loop
+		is given by $\sum_{i=1}^N (n\times in)$ which turns out to be $O(N^2 \times n^2)$.
+	\end{enumerate}
+	
+	\textbf{Problem 1.33:}Give an efficient algorithm to compute the least common multiple of two n-bit numbers x and y, that is, the smallest number divisible by both x and y. What is the running time of your algorithm as a function of n?
+	
+	Given numbers X and Y, apply Euclid algorithm to compute GCD(X,Y). Followed by that get LCM(X,Y) by $\frac{X \times Y}{GCD(X,Y)}$. GCD computation takes $O(n^3)$ where n is number of bits in X, Y. Final LCM computation takes $O(n^2)$. Therefore the algorithm is bounded by $O(n^3)$.
 	
 	
 
